@@ -1,31 +1,26 @@
 #include <Arduino.h>
+#include <Constants.h>
+#include <Button/Button.h>
 
-int myFunction(int, int);
-
-const int buttonPin = 2;
-const int ledPin = 8;
-
-const int baudRate = 9600;
+Button bitsButtons[nbOfButtons] = {
+  Button(Pins::B_16),
+  Button(Pins::B_8),
+  Button(Pins::B_4),
+  Button(Pins::B_2),
+  Button(Pins::B_1),
+};
 
 void setup() {
   Serial.begin(baudRate);
+  pinMode(Pins::LED_YELLOW, OUTPUT);
 
-  // int result = myFunction(2, 3);
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
-}
-
-void loop() {
-  int buttonState = digitalRead(buttonPin);
-  delay(50);
-
-  if (buttonState == HIGH) {
-    digitalWrite(ledPin, HIGH);  // turn the LED on (HIGH is the voltage level)
-  } else {
-    digitalWrite(ledPin, LOW);   // turn the LED off by making the voltage LOW
+  for (int i = 0; i < nbOfButtons; ++i) {
+    bitsButtons[i].init();
   }
 }
 
-int myFunction(int x, int y) {
-  return x + y;
+void loop() {
+  for (int i = 0; i < nbOfButtons; ++i) {
+    bitsButtons[i].addPressListener();
+  }
 }
