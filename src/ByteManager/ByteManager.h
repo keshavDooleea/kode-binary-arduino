@@ -6,18 +6,14 @@
 class ByteManager {
 
     private:
-        int _currNumber;
-        bool _isConversionValid;
-
-        int _activatedBytes[NB_OF_BUTTONS];
-        void initActivatedBytes();
-        void updateConversion();
+        int _generatedNumber;
+        int _currentTotal;
 
     public:
         ByteManager();
 
         void generateNewNumber();
-        void handleByteButton(int byte, int btnLedPosition);
+        void handleByteButton(int byte, bool isPressed);
         bool isConversionValid();
 };
 

@@ -5,34 +5,47 @@
 #include <ValidateButton/ValidateButton.h>
 
 ByteManager byteManager;
-ValidateButton validateButton(7, 13, 14, nullptr);
+ValidateButton validateButton(7, 13, A0, nullptr);
 
-void onByteBtnClickedCb(int byte, int btnLedPosition) {
-  byteManager.handleByteButton(byte, btnLedPosition);
+ButtonLed buttonLeds[NB_OF_BUTTONS] = {
+  ButtonLed(16, 2, 8,  nullptr),
+  ButtonLed(8,  3, 9,  nullptr),
+  ButtonLed(4,  4, 10, nullptr),
+  ButtonLed(2,  5, 11, nullptr),
+  ButtonLed(1,  6, 12, nullptr),
+};
+
+void onByteBtnClickedCb(int byte, bool isPressed) {
+  byteManager.handleByteButton(byte, isPressed);
 }
 
 void onValidateBtnClickedCb() {
-  validateButton.blinkLed(byteManager.isConversionValid());
-  // byteManager.generateNewNumber();
+  bool isConversionValid = byteManager.isConversionValid();
+  validateButton.blinkLed(isConversionValid);
+
+  if (!isConversionValid) {
+    return;
+  }
+
+  byteManager.generateNewNumber();
+
+  for (int i = 0; i < NB_OF_BUTTONS; ++i) {
+    buttonLeds[i].turnOffLed();
+  }
 }
 
-ButtonLed buttonLeds[NB_OF_BUTTONS] = {
-  ButtonLed(16, 2, 8,  onByteBtnClickedCb),
-  ButtonLed(8,  3, 9,  onByteBtnClickedCb),
-  ButtonLed(4,  4, 10, onByteBtnClickedCb),
-  ButtonLed(2,  5, 11, onByteBtnClickedCb),
-  ButtonLed(1,  6, 12, onByteBtnClickedCb),
-};
-
 void setup() {
+  randomSeed(analogRead(A1));
   Serial.begin(BAUD_RATE);
 
   byteManager.generateNewNumber();
+  
   validateButton.init();
   validateButton.setOnBtnClickedCb(onValidateBtnClickedCb);
   
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
     buttonLeds[i].init();
+    buttonLeds[i].setOnBtnClickedCb(onByteBtnClickedCb);
   }
 }
 
@@ -40,6 +53,6 @@ void loop() {
   validateButton.read();
   
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
-    buttonLeds[i].read(i);
+    buttonLeds[i].read();
   }
 }

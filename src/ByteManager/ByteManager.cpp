@@ -1,38 +1,25 @@
 #include <ByteManager/ByteManager.h>
+#include <Constants.h>
 #include <Arduino.h>
 
-ByteManager::ByteManager() : _isConversionValid(false) {
-    generateNewNumber();
-    initActivatedBytes();
-}
+ByteManager::ByteManager() { }
 
 void ByteManager::generateNewNumber() {
-    _currNumber = 3;
-}
+    int maxBytesRange = 1 << NB_OF_BUTTONS;
+    _generatedNumber = random(1, maxBytesRange);
+    _currentTotal = 0;
 
-void ByteManager::initActivatedBytes() {
-    for (int i = 0; i < NB_OF_BUTTONS; ++i) {
-        _activatedBytes[i] = 0; 
-    }
+    Serial.println("Number is: " + String(_generatedNumber));
 }
 
 bool ByteManager::isConversionValid() {
-    return _isConversionValid;
+    return _currentTotal == _generatedNumber;
 }
 
-void ByteManager::updateConversion() {
-    int total = 0;
-
-    for (int i = 0; i < NB_OF_BUTTONS; ++i) {
-        total += _activatedBytes[i]; 
-    } 
-
-    _isConversionValid = total == _currNumber;
-}
-
-void ByteManager::handleByteButton(int byte, int btnLedPosition) {
-    int newValue = _activatedBytes[btnLedPosition] == 0 ? byte : 0;
-    _activatedBytes[btnLedPosition] = newValue;
-    
-    updateConversion();
+void ByteManager::handleByteButton(int byte, bool isPressed) {
+    if (isPressed) {
+        _currentTotal += byte;
+    } else {
+        _currentTotal -= byte;
+    }
 }
