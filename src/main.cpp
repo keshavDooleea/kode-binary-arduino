@@ -1,26 +1,25 @@
 #include <Arduino.h>
 #include <Constants.h>
-#include <Button/Button.h>
+#include <ButtonLedPair/ButtonLedPair.h>
 
-Button bitsButtons[nbOfButtons] = {
-  Button(Pins::B_16),
-  Button(Pins::B_8),
-  Button(Pins::B_4),
-  Button(Pins::B_2),
-  Button(Pins::B_1),
+ButtonLedPair buttonLedPair[nbOfButtons] = {
+  ButtonLedPair(2, 8),
+  ButtonLedPair(3, 9),
+  ButtonLedPair(4, 10),
+  ButtonLedPair(5, 11),
+  ButtonLedPair(6, 12),
 };
 
 void setup() {
   Serial.begin(baudRate);
-  pinMode(Pins::LED_YELLOW, OUTPUT);
-
+  
   for (int i = 0; i < nbOfButtons; ++i) {
-    bitsButtons[i].init();
+    buttonLedPair[i].init();
   }
 }
 
 void loop() {
   for (int i = 0; i < nbOfButtons; ++i) {
-    bitsButtons[i].addPressListener();
+    buttonLedPair[i].listen();
   }
 }
