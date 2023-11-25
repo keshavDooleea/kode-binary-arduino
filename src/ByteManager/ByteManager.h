@@ -6,17 +6,19 @@
 class ByteManager {
 
     private:
-        int currNumber;
+        int _currNumber;
+        bool _isConversionValid;
 
-        int activatedBytes[NB_OF_BUTTONS];
+        int _activatedBytes[NB_OF_BUTTONS];
         void initActivatedBytes();
+        void updateConversion();
 
     public:
         ByteManager();
 
         void generateNewNumber();
-        int getCurrNumber();
-        void handleButtonClicked(int byte, int btnLedPosition);
+        void handleByteButton(int byte, int btnLedPosition);
+        bool isConversionValid();
 };
 
 #endif // BYTE_MANAGER_H

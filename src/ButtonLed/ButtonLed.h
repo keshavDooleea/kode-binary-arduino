@@ -10,11 +10,11 @@ class ButtonLed {
         int ledState;
         int currentBtnState;
         int previousBtnState;
-        void (*btnClickedCb)(int byte, int btnLedPosition);
+        void (*onBtnClickedCb)(int byte, int btnLedPosition);
 
     public:
         ButtonLed(int byte, int buttonPin, int ledPin, 
-            void (*btnClickedCb)(int byte, int btnLedPosition) = nullptr);
+            void (*onBtnClickedCb)(int byte, int btnLedPosition) = nullptr);
 
         void init();
         void read(int btnLedPosition);
