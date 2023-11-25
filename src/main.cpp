@@ -5,14 +5,15 @@
 #include <ValidateButton/ValidateButton.h>
 
 ByteManager byteManager;
+ValidateButton validateButton(7, 13, 14, nullptr);
 
 void onByteBtnClickedCb(int byte, int btnLedPosition) {
   byteManager.handleByteButton(byte, btnLedPosition);
 }
 
 void onValidateBtnClickedCb() {
-  Serial.println("CLICK");
-  Serial.println(byteManager.isConversionValid());
+  validateButton.blinkLed(byteManager.isConversionValid());
+  // byteManager.generateNewNumber();
 }
 
 ButtonLed buttonLeds[NB_OF_BUTTONS] = {
@@ -23,13 +24,12 @@ ButtonLed buttonLeds[NB_OF_BUTTONS] = {
   ButtonLed(1,  6, 12, onByteBtnClickedCb),
 };
 
-ValidateButton validateButton(7, 14, 15, onValidateBtnClickedCb);
-
 void setup() {
   Serial.begin(BAUD_RATE);
 
   byteManager.generateNewNumber();
   validateButton.init();
+  validateButton.setOnBtnClickedCb(onValidateBtnClickedCb);
   
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
     buttonLeds[i].init();

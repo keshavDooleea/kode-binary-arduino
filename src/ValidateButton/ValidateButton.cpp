@@ -11,6 +11,25 @@ void ValidateButton::init() {
   pinMode(redLedPin, OUTPUT);
 }
 
+void ValidateButton::setOnBtnClickedCb(void (*cb)()) {
+  onBtnClickedCb = cb;
+}
+
+void ValidateButton::blinkLed(bool isGreen) {
+  int blinkCount = 5;
+  int blinkDelay = 175;
+  int ledPin = isGreen ? greenLedPin : redLedPin;
+
+  for (int i = 0; i < blinkCount; ++i) {
+    digitalWrite(ledPin, HIGH); 
+    delay(blinkDelay); 
+    digitalWrite(ledPin, LOW); 
+    delay(blinkDelay); 
+  }
+
+  delay(1000);
+}
+
 void ValidateButton::read() {
   currentBtnState = digitalRead(buttonPin);
 

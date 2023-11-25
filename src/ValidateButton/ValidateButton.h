@@ -16,6 +16,8 @@ class ValidateButton {
 
         void init();
         void read();
+        void blinkLed(bool isGreen);
+        void setOnBtnClickedCb(void (*cb)());
 };
 
 #endif // VALIDATE_BUTTON_H
