@@ -1,11 +1,11 @@
-#ifndef BUTTON_LED_PAIR_H
-#define BUTTON_LED_PAIR_H
+#ifndef BUTTON_LED_H
+#define BUTTON_LED_H
 
 #include <Constants.h>
 
-class ButtonLedPair {
+class ButtonLed {
     public:
-        ButtonLedPair(int buttonPin, int ledPin);
+        ButtonLed(int buttonPin, int ledPin);
 
         void init();
         void listen();
@@ -16,4 +16,4 @@ class ButtonLedPair {
         int isPressed;
 };
 
-#endif // BUTTON_LED_PAIR_H
+#endif // BUTTON_LED_H

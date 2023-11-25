@@ -1,25 +1,25 @@
 #include <Arduino.h>
 #include <Constants.h>
-#include <ButtonLedPair/ButtonLedPair.h>
+#include <ButtonLed/ButtonLed.h>
 
-ButtonLedPair buttonLedPair[nbOfButtons] = {
-  ButtonLedPair(2, 8),
-  ButtonLedPair(3, 9),
-  ButtonLedPair(4, 10),
-  ButtonLedPair(5, 11),
-  ButtonLedPair(6, 12),
+ButtonLed buttonLeds[nbOfButtons] = {
+  ButtonLed(2, 8),
+  ButtonLed(3, 9),
+  ButtonLed(4, 10),
+  ButtonLed(5, 11),
+  ButtonLed(6, 12),
 };
 
 void setup() {
   Serial.begin(baudRate);
   
   for (int i = 0; i < nbOfButtons; ++i) {
-    buttonLedPair[i].init();
+    buttonLeds[i].init();
   }
 }
 
 void loop() {
   for (int i = 0; i < nbOfButtons; ++i) {
-    buttonLedPair[i].listen();
+    buttonLeds[i].listen();
   }
 }

@@ -1,15 +1,15 @@
-#include <ButtonLedPair/ButtonLedPair.h>
+#include <ButtonLed/ButtonLed.h>
 #include <Arduino.h>
 
-ButtonLedPair::ButtonLedPair(int buttonPin, int ledPin) 
+ButtonLed::ButtonLed(int buttonPin, int ledPin) 
   : buttonPin(buttonPin), ledPin(ledPin), isPressed(false) {}
 
-void ButtonLedPair::init() {
+void ButtonLed::init() {
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
 }
 
-void ButtonLedPair::listen() {
+void ButtonLed::listen() {
   isPressed = digitalRead(buttonPin) == HIGH;
 
   if (isPressed) {
