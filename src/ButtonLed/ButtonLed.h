@@ -1,19 +1,24 @@
 #ifndef BUTTON_LED_H
 #define BUTTON_LED_H
 
-#include <Constants.h>
-
 class ButtonLed {
-    public:
-        ButtonLed(int buttonPin, int ledPin);
-
-        void init();
-        void listen();
-
+    
     private:
+        int byte;
         int buttonPin;
         int ledPin;
-        int isPressed;
+        int ledState;
+        int currentBtnState;
+        int previousBtnState;
+        void (*btnClickedCb)(int byte, int btnLedPosition);
+
+    public:
+        ButtonLed(int byte, int buttonPin, int ledPin, 
+            void (*btnClickedCb)(int byte, int btnLedPosition) = nullptr);
+
+        void init();
+        void read(int btnLedPosition);
+        int getByte();
 };
 
 #endif // BUTTON_LED_H

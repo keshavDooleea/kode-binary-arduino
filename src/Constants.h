@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H  
 #define CONSTANTS_H
 
-const int nbOfButtons = 5;
-const int baudRate = 9600;
+const int NB_OF_BUTTONS = 5;
+const int BAUD_RATE = 9600;
 
 #endif // CONSTANTS_H

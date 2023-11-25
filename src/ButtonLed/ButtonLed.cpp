@@ -1,20 +1,28 @@
 #include <ButtonLed/ButtonLed.h>
 #include <Arduino.h>
 
-ButtonLed::ButtonLed(int buttonPin, int ledPin) 
-  : buttonPin(buttonPin), ledPin(ledPin), isPressed(false) {}
+ButtonLed::ButtonLed(int byte, int buttonPin, int ledPin, void (*btnClickedCb)(int byte, int btnLedPosition)) 
+  : byte(byte), buttonPin(buttonPin), ledPin(ledPin),
+  ledState(LOW), currentBtnState(LOW), previousBtnState(LOW), 
+  btnClickedCb(btnClickedCb) {}
 
 void ButtonLed::init() {
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
 }
 
-void ButtonLed::listen() {
-  isPressed = digitalRead(buttonPin) == HIGH;
+int ButtonLed::getByte() {
+  return byte;
+}
 
-  if (isPressed) {
-    digitalWrite(ledPin, HIGH);
-  } else {
-    digitalWrite(ledPin, LOW);
+void ButtonLed::read(int btnLedPosition) {
+  currentBtnState = digitalRead(buttonPin);
+
+  if (previousBtnState != currentBtnState && currentBtnState == LOW) {
+    ledState = ledState == HIGH ? LOW : HIGH;
+    digitalWrite(ledPin, ledState);
+    btnClickedCb(byte, btnLedPosition);
   }
+
+  previousBtnState = currentBtnState;
 }
