@@ -1,5 +1,4 @@
 #include <LcdManager/LcdManager.h>
-#include <Arduino.h>
 
 LcdManager::LcdManager(int CLK, int DIO) : _tm(CLK, DIO) { }
 
@@ -14,8 +13,6 @@ void LcdManager::clear() {
 }
 
 void LcdManager::display(int number) {
-    String num = String(number);
-
     if (number > 9) {
         _tm.display(2, number / 10);
         _tm.display(3, number % 10);
