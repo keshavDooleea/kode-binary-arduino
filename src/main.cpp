@@ -38,7 +38,7 @@ void onValidateBtnClickedCb() {
 
 void setup() {
   randomSeed(analogRead(A5));
-  Serial.begin(9600);
+  Serial.begin(BAUD_RATE);
   
   byteManager.generateNewNumber();
 

@@ -1,6 +1,7 @@
 #ifndef BYTE_MANAGER_H
 #define BYTE_MANAGER_H
 
+#include <Arduino.h>
 #include <Constants.h>
 
 class ByteManager {

@@ -1,6 +1,4 @@
 #include <ByteManager/ByteManager.h>
-#include <Constants.h>
-#include <Arduino.h>
 
 ByteManager::ByteManager() { }
 
