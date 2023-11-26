@@ -1,21 +1,22 @@
 #ifndef VALIDATE_BUTTON_H
 #define VALIDATE_BUTTON_H
 
-class ValidateButton {
+#include <Arduino.h>
+#include <AbsButton/AbsButton.h>
+
+class ValidateButton : public AbsButton {
     
     private:
-        int buttonPin;
-        int greenLedPin;
-        int redLedPin;
-        int currentBtnState;
-        int previousBtnState;
+        int _greenLedPin;
+        int _redLedPin;
         void (*onBtnClickedCb)();
 
     public:
         ValidateButton(int buttonPin, int greenLedPin, int redLedPin, void (*onBtnClickedCb)() = nullptr);
 
-        void init();
-        void read();
+        void init() override;
+        void onClick() override;
+
         void blinkLed(bool isGreen);
         void setOnBtnClickedCb(void (*cb)());
 };

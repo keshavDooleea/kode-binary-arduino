@@ -1,14 +1,12 @@
 #include <ValidateButton/ValidateButton.h>
-#include <Arduino.h>
 
 ValidateButton::ValidateButton(int buttonPin, int greenLedPin, int redLedPin, void (*onBtnClickedCb)()) 
-  : buttonPin(buttonPin), greenLedPin(greenLedPin), redLedPin(redLedPin), 
-  currentBtnState(LOW), previousBtnState(LOW), onBtnClickedCb(onBtnClickedCb) {}
+  : AbsButton(buttonPin), _greenLedPin(greenLedPin), _redLedPin(redLedPin), onBtnClickedCb(onBtnClickedCb) {}
 
 void ValidateButton::init() {
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(greenLedPin, OUTPUT);
-  pinMode(redLedPin, OUTPUT);
+  AbsButton::init();
+  pinMode(_greenLedPin, OUTPUT);
+  pinMode(_redLedPin, OUTPUT);
 }
 
 void ValidateButton::setOnBtnClickedCb(void (*cb)()) {
@@ -18,7 +16,7 @@ void ValidateButton::setOnBtnClickedCb(void (*cb)()) {
 void ValidateButton::blinkLed(bool isGreen) {
   int blinkCount = 5;
   int blinkDelay = 175;
-  int ledPin = isGreen ? greenLedPin : redLedPin;
+  int ledPin = isGreen ? _greenLedPin : _redLedPin;
 
   for (int i = 0; i < blinkCount; ++i) {
     digitalWrite(ledPin, HIGH); 
@@ -30,12 +28,6 @@ void ValidateButton::blinkLed(bool isGreen) {
   delay(1000);
 }
 
-void ValidateButton::read() {
-  currentBtnState = digitalRead(buttonPin);
-
-  if (previousBtnState != currentBtnState && currentBtnState == LOW) {
-    onBtnClickedCb();
-  }
-
-  previousBtnState = currentBtnState;
+void ValidateButton::onClick() {
+  onBtnClickedCb();
 }
