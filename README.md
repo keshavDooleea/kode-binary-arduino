@@ -1,6 +1,6 @@
 # kode-binary-arduino
 
-Convert randomly generated numbers to binary code using an Arduino UNO board along with ATMEGA328P microcontroller, TM1637 LCD display and other hardware components as shown below.
+Convert randomly generated numbers to binary code using an Arduino UNO R3 board along with ATMEGA328P microcontroller, TM1637 LCD display and other hardware components as shown below.
 
 ## Youtube Tutorials
 
