@@ -9,6 +9,7 @@ Buttons: https://docs.arduino.cc/built-in-examples/digital/Button?fbclid=IwAR2BJ
 LED + Button: https://www.youtube.com/watch?v=yBgMJssXqHY  
 LCD TM1637 Digit Display: https://www.youtube.com/watch?v=6W7tycX-F1o
 
-## Completed Circuit
+## Circuit Photos
 
 ![Circuit](assets/circuit.jpg)
+![Circuit Demo](assets/circuit_demo.gif)
