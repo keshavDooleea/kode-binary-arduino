@@ -20,19 +20,21 @@ void onByteBtnClickedCb(int byte, bool isPressed) {
   byteManager.handleByteButton(byte, isPressed);
 }
 
-void onValidateBtnClickedCb() {
-  bool isConversionValid = byteManager.isConversionValid();
-  validateButton.blinkLed(isConversionValid);
-
-  if (!isConversionValid) {
-    return;
-  }
-
+void startNewRound() {
   byteManager.generateNewNumber();
   lcdManager.clear();
 
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
     buttonLeds[i].turnOffLed();
+  }
+}
+
+void onValidateBtnClickedCb() {
+  bool isConversionValid = byteManager.isConversionValid();
+  validateButton.blinkLed(isConversionValid);
+
+  if (isConversionValid) {
+    startNewRound();
   }
 }
 
