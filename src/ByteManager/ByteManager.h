@@ -15,6 +15,7 @@ class ByteManager {
         void generateNewNumber();
         void handleByteButton(int byte, bool isPressed);
         bool isConversionValid();
+        int getGeneratedNumber();
 };
 
 #endif // BYTE_MANAGER_H

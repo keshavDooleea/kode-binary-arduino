@@ -12,6 +12,10 @@ void ByteManager::generateNewNumber() {
     Serial.println("Number is: " + String(_generatedNumber));
 }
 
+int ByteManager::getGeneratedNumber() {
+    return _generatedNumber;
+}
+
 bool ByteManager::isConversionValid() {
     return _currentTotal == _generatedNumber;
 }

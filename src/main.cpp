@@ -1,10 +1,11 @@
 #include <Arduino.h>
-#include <Constants.h>
 #include <ButtonLed/ButtonLed.h>
 #include <ByteManager/ByteManager.h>
 #include <ValidateButton/ValidateButton.h>
+#include <LcdManager/LcdManager.h>
 
 ByteManager byteManager;
+LcdManager lcdManager(A1, A2);
 ValidateButton validateButton(7, 13, A0, nullptr);
 
 ButtonLed buttonLeds[NB_OF_BUTTONS] = {
@@ -28,6 +29,7 @@ void onValidateBtnClickedCb() {
   }
 
   byteManager.generateNewNumber();
+  lcdManager.clear();
 
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
     buttonLeds[i].turnOffLed();
@@ -35,10 +37,12 @@ void onValidateBtnClickedCb() {
 }
 
 void setup() {
-  randomSeed(analogRead(A1));
-  Serial.begin(BAUD_RATE);
-
+  randomSeed(analogRead(A5));
+  Serial.begin(9600);
+  
   byteManager.generateNewNumber();
+
+  lcdManager.init();
   
   validateButton.init();
   validateButton.setOnBtnClickedCb(onValidateBtnClickedCb);
@@ -50,8 +54,9 @@ void setup() {
 }
 
 void loop() {
+  lcdManager.display(byteManager.getGeneratedNumber());
   validateButton.read();
-  
+
   for (int i = 0; i < NB_OF_BUTTONS; ++i) {
     buttonLeds[i].read();
   }
